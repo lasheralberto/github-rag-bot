@@ -1,0 +1,43 @@
+# Ignorar archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignorar entornos virtuales
+venv/
+env/
+
+# Ignorar archivos de configuración de Flask
+instance/
+config.py
+*.env
+*.flaskenv
+
+# Ignorar bases de datos de desarrollo
+*.sqlite3
+*.db
+
+# Ignorar archivos de caché y logs
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar archivos de IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignorar archivos de dependencias
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignorar archivos de distribución
+build/
+dist/
+*.egg-info/
+.eggs/
+
+service_account_gitragbot.json
