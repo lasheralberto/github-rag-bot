@@ -83,6 +83,15 @@ class VectorDBHandler:
         string = string.lower()
         
         return string
+    
+    def add_answer_tovector_pinecone(self, answer, question, index_name):
+
+        index_name = self.convert_reponame_toindex_format(index_name)
+        document_1 = Document(page_content=answer, metadata={"question":question})
+        vector_store = self.add_documents_to_store(document_1, OpenAIEmbeddings(), index_name)
+        print("Reindexed the vectorstore with the answer!")
+        
+
 
     def process_files(self, file_content_list, index_name):
         #todo, mecesito hacer textsplits
@@ -188,14 +197,14 @@ class VectorDBHandler:
                         
                         Detect the language (e.g., English, Spanish, etc.) in the user's question and respond in the same language.
                         Do not answer in multiple languages, just the language you detected previosuly.
-                        Provide technical guidance based on the user's needs, focusing on code improvement, optimization, and debugging.
+                        
                         When applicable, give clear explanations but always focus on delivering a solution in the detected language.
                     """
                 },
                 {
                     "role": "user",
-                    "content": f"Here is the question: '{question}'\n"
-                            f"And here is the provided answer that needs improvement: '{provided_answer}'"
+                    "content": f"Based on the user's question: '{question}'\n"
+                            f"Rewrite the answer to offer the user a more technical approach: '{provided_answer}'"
                 }
             ]
         )

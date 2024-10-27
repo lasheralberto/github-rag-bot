@@ -308,6 +308,7 @@ class AskRepo(Resource):
             handler = VectorDBHandler(OPENAI_KEY, PINECONE_KEY, 'us-east-1')
             responses = handler.similarity_search(question, reponame)
             
+            first_best_response = responses[0].page_content
             two_best_resp = ''
             other_responses = ''
 
@@ -317,11 +318,12 @@ class AskRepo(Resource):
                 # Combinar los dos primeros documentos en `two_best_resp`
                 if idx < 2:
                     two_best_resp += '\n' + documento
-                    
- 
-            best_response = handler.get_improved_response(question, two_best_resp)
 
-            return {"answer": str(best_response), "statusCode": 200}
+ 
+            #best_response = handler.get_improved_response(question, first_best_response)
+            handler.add_answer_tovector_pinecone(str(first_best_response),question,reponame)
+
+            return {"answer": str(first_best_response), "statusCode": 200}
         except Exception as e:
             logging.error(f'An error occurred while processing the question: {str(e)}')
             return {"statusCode": 500, "answer": str(e)}
